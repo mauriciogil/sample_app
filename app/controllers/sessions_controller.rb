@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       #sign in
       sign_in user # function that has to be written
-      redirect_to user
+      redirect_back_or user
     else
       #displary error message
       flash.now[:error] = 'Invalid email/password combination'
