@@ -23,7 +23,7 @@ development:
 #   database: db/test.sqlite3
 #   pool: 5
 #   timeout: 5000
-test:
+test: &test
   adapter: postgresql
   encoding: unicode
   database: sample_test
@@ -39,3 +39,6 @@ production:
   encoding: unicode
   database: sample_production
   host: localhost
+
+cucumber:
+  <<: *test
