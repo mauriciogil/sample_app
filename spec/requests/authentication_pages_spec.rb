@@ -17,6 +17,9 @@ describe "Authentication" do
       before { click_button "Sign in" }
       it { should have_selector('title', text: 'Sign in') }
       it { should have_selector('div.alert.alert-error', text: 'Invalid') }
+      it { should_not have_link('Profile'), '/users' }
+      it { should_not have_link('Settings'), '/users' }
+
 
       describe "after visiting another page" do
         before { click_link "Home" }
@@ -96,6 +99,15 @@ describe "Authentication" do
       end
       describe 'submitting a PUT request to the User#update action' do
         before { put user_path(wrong_user) }
+        specify { response.should redirect_to(root_path) }
+      end
+    end
+
+    describe 'as signed in user' do
+      let(:user) { FactoryGirl.create(:user) }
+      before { sign_in user }
+      describe 'visiting sign up page' do
+        before { put signup_path }
         specify { response.should redirect_to(root_path) }
       end
     end
